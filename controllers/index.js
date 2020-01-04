@@ -4,6 +4,7 @@ var express = require('express'),
 
 router.use('/users', require('./users'));
 router.use('/attendences', require('./attendences'));
+router.use('/infos', require('./infos'));
 
 router.get('/', function (req, res) {
     res.render('index', {title: 'Rayhan'});
