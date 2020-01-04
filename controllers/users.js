@@ -30,7 +30,7 @@ router.post('/login/', (req, res) => {
 
 // C
 router.post('/',
-    // Auth.isAuthenticated,
+    Auth.isAuthenticated,
     (req, res) => {
         Model.createData(req.body, (err, data) => {
             responder(res, err, data)
@@ -39,7 +39,7 @@ router.post('/',
 
 // Ra
 router.get('/',
-    // Auth.isAuthenticated,
+    Auth.isAuthenticated, Auth.isAdmin(),
     (req, res) => {
         Model.getAllData({}, req.query['page'] ? req.query['page'] : 0, (err, data) => {
             responder(res, err, data)
@@ -49,49 +49,49 @@ router.get('/',
 
 // R1
 router.get('/byemail/:id',
-    // Auth.isAuthenticated,
+    Auth.isAuthenticated,
     (req, res) => {
-    Model.getOneData({email: req.params['id']}, (err, data) => {
-        responder(res, err, data)
+        Model.getOneData({email: req.params['id']}, (err, data) => {
+            responder(res, err, data)
+        })
     })
-})
 
 // R1
 router.get('/byid/:id',
-    // Auth.isAuthenticated,
+    Auth.isAuthenticated,
     (req, res) => {
-    Model.getOneData({_id: req.params['id']}, (err, data) => {
-        responder(res, err, data)
+        Model.getOneData({_id: req.params['id']}, (err, data) => {
+            responder(res, err, data)
+        })
     })
-})
 
 // U1
 router.put('/:id',
-    // Auth.isAuthenticated,
+    Auth.isAuthenticated,Auth.isAdmin(),
     (req, res) => {
-    delete req.body.email
+        delete req.body.email
 
-    Model.updateOneData({_id: req.params.id}, req.body, (err, data) => {
-        responder(res, err, data)
+        Model.updateOneData({_id: req.params.id}, req.body, (err, data) => {
+            responder(res, err, data)
+        })
     })
-})
 
 // D1
 router.delete('/:id',
-    // Auth.isAuthenticated,
+    Auth.isAuthenticated, Auth.isAdmin(),
     (req, res) => {
-    Model.removeOneData({_id: req.params['id']}, (err, data) => {
-        responder(res, err, data)
+        Model.removeOneData({_id: req.params['id']}, (err, data) => {
+            responder(res, err, data)
+        })
     })
-})
 
 // Da
 router.delete('/',
-    // Auth.isAuthenticated,
+    Auth.isAuthenticated, Auth.isAdmin(),
     (req, res) => {
-    Model.removeAllData((err, data) => {
-        responder(res, err, data)
+        Model.removeAllData((err, data) => {
+            responder(res, err, data)
+        })
     })
-})
 
 module.exports = router;
